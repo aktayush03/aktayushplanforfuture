@@ -2,239 +2,246 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Planner — Powered by AKT.Ayush</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JEE/NEET Planner — Powered by AKT.Ayush</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
   <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #ff6f61, #ff4d6d);
-      color: #222;
-      text-align: center;
-      padding: 20px;
+    :root{
+      --pink:#ff4d6d; --pink-2:#ff758c; --pink-3:#ffe0e8; --ink:#111;
     }
-    .container {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
-      max-width: 95%;
-      margin: auto;
+    *{box-sizing:border-box}
+    body{
+      margin:0; padding:15px;
+      font-family:'Roboto',sans-serif; font-weight:900; color:#222;
+      background:linear-gradient(135deg,var(--pink),var(--pink-2));
+      display:flex; justify-content:center;
     }
-    h1, h2, h3, h4 {
-      margin: 10px 0;
-      font-weight: 900;
+    .container{
+      width:100%; max-width:1200px;
+      background:#fff; border-radius:18px; padding:20px;
+      box-shadow:0 8px 24px rgba(0,0,0,.25);
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      table-layout: fixed;
+    h1,h2,h3{margin:6px 0; text-align:center; font-weight:900}
+    h1{color:#d90429}
+    h2{color:#d90429; font-size:16px}
+    h3{color:#000000;font: aize 22px; }
+    /* Date strip */
+    .date-bar{
+      margin-top:10px; margin-bottom:6px;
+      background:linear-gradient(90deg,#ff5b78,#ff8aa1);
+      color:#000000; border-radius:12px; padding:10px 14px;
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      font-weight:900;font-size: 22px;
+      box-shadow:0 4px 12px rgba(0,0,0,.15);
     }
-    th, td {
-      border: 2px solid #ff4d6d;
-      padding: 8px;
-      text-align: center;
-      vertical-align: top;
-      word-wrap: break-word;
+    .date-chip{
+      background:rgba(255,255,255,.18);
+      padding:6px 10px; border-radius:999px; font-size:20px;
+      backdrop-filter: blur(2px);
     }
-    th {
-      background: #ffe6eb;
-      font-weight: bold;
+
+    .table-wrapper{ overflow-x:auto; margin-top:12px }
+    table{
+      width:100%; border-collapse:collapse; min-width:700px;
     }
-    textarea {
-      width: 90%;
-      min-height: 30px;
-      padding: 6px;
-      border: 2px solid #ff4d6d;
-      border-radius: 6px;
-      outline: none;
-      font-family: 'Roboto', sans-serif;
-      font-weight: 900;
-      font-size: 14px;
-      color: #111111;
-      text-align: center;
-      resize: none;
-      overflow: hidden;
+    th,td{
+      border:2px solid var(--pink); padding:6px; text-align:center; vertical-align:top;
     }
-    input[type="checkbox"] {
-      transform: scale(1.3);
+    thead th{
+      background:var(--pink-3); position:sticky; top:0; z-index:1; color:#b8003c;
+      font-weight:900;
     }
-    button {
-      margin: 10px;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: bold;
-      background: #ff4d6d;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+    textarea{
+      width:95%; min-height:30px; padding:6px; resize:none; overflow:hidden;
+      border:2px solid var(--pink); border-radius:6px; background:hsl(0, 0%, 100%);
+      font-family:'Roboto',sans-serif; font-weight:700; font-size:14px; text-align:center;
     }
-    button:hover {
-      background: #ff6f61;
+    .timeInput{
+      width:180px; padding:4px; border:2px solid var(--pink); border-radius:6px;
+      background:#fff7f9; text-align:center; font-weight:900; font-size:14px; color:var(--ink);
     }
-    .timeInput {
-      font-family: 'Roboto', sans-serif;
-      font-weight: 400;
-      font-size: 14px;
-      text-align: center;
-      border: 2px solid #ff4d6d;
-      border-radius: 6px;
-      padding: 6px;
-      color: #111111;
+    input[type="checkbox"]{ transform:scale(1.2); accent-color:#00e1ff; }
+
+    .btns{
+      display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:16px;
+    }
+    button{
+      padding:10px 16px; border:none; border-radius:10px; cursor:pointer;
+      background:rgb(111, 255, 74); color:#fff; font-weight:900; font-size:14px;
+      box-shadow:0 4px 12px rgba(0,0,0,.2); transition:.2s;
+    }
+    button:hover{ background:#d90429; transform:translateY(-1px) }
+
+    @media (max-width:768px){
+      h1{font-size:20px} h2{font-size:14px}
+      .timeInput{width:76px; font-size:12px}
+      textarea{font-size:12px}
+      button{font-size:12px; padding:8px 12px}
     }
   </style>
 </head>
 <body>
-  <div class="container" id="planner">
+    <div class="container" id="planner">
     <h1>📘 JEE / NEET Daily Planner</h1>
     <h2>Powered by AKT.Ayush</h2>
     <h3 id="welcome"></h3>
     <h4 id="todayDate"></h4>
 
-    <table id="plannerTable">
-      <thead>
-        <tr>
-          <th>Select</th>
-          <th>Time</th>
-          <th>To Do</th>
-          <th>Important Note</th>
-          <th>Completed</th>
-          <th>Feedback</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <!-- Date strip -->
+    <div class="date-bar">
+      <div class="date-chip" id="dayChip">—</div>
+      <div id="dateString">—</div>
+    </div>
 
-    <button id="addRow">➕ Add Row</button>
-    <button id="mergeRows">🔗 Merge Selected Rows</button>
-    <button id="unmergeRows">❌ Unmerge</button>
-    <button id="savePdf">📥 Save Planner as PDF</button>
+    <div class="table-wrapper">
+      <table id="plannerTable">
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Time</th>
+            <th>To Do</th>
+            <th>Important Note</th>
+            <th>Completed</th>
+            <th>Feedback</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="btns">
+      <button id="addRow">➕ Add Row</button>
+      <button id="mergeRows">🔗 Merge Selected</button>
+      <button id="unmergeRows">❌ Unmerge</button>
+      <button id="resetTable">♻ Reset</button>
+      <button id="savePdf">📥 Save as PDF (A4 Portrait)</button>
+    </div>
   </div>
 
   <script>
+    // Show student name
     const studentName = localStorage.getItem("studentName") || "Student";
     document.getElementById("welcome").innerText = `Welcome, ${studentName} 👋`;
 
-    const today = new Date();
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById("todayDate").innerText = today.toLocaleDateString('en-US', options);
+    // ---- Date strip (India locale-friendly)
+    const now = new Date();
+    document.getElementById("dayChip").textContent =
+      now.toLocaleDateString("en-IN", { weekday: "long" });
+    document.getElementById("dateString").textContent =
+      now.toLocaleDateString("en-IN", { day:"2-digit", month:"long", year:"numeric" });
 
+    // ---- Table logic
     const tbody = document.querySelector("#plannerTable tbody");
 
-    function generateRows() {
+    function generateRows(){
       tbody.innerHTML = "";
-      for (let i = 0; i < 24; i++) {
-        addRow(i.toString().padStart(2, '0') + ":00");
+      for(let i=0;i<24;i++){
+        addRow(String(i).padStart(2,"0")+":00");
       }
     }
 
-    function addRow(time = "") {
-      const row = document.createElement("tr");
-      row.innerHTML = `
+    function addRow(time=""){
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
         <td><input type="checkbox" class="rowSelect"></td>
-        <td><input type="text" class="timeInput" value="${time}" /></td>
+        <td><input type="text" class="timeInput" value="${time}"></td>
         <td><textarea placeholder="Task"></textarea></td>
         <td><textarea placeholder="Note"></textarea></td>
         <td><input type="checkbox"></td>
         <td><textarea placeholder="Feedback"></textarea></td>
       `;
-      tbody.appendChild(row);
-      enableAutoResize();
+      tbody.appendChild(tr);
+      enableAutoResize(tr);
     }
 
-    function autoResize(el) {
+    function autoResize(el){
       el.style.height = "auto";
-      el.style.height = (el.scrollHeight) + "px";
+      el.style.height = el.scrollHeight + "px";
     }
-
-    function enableAutoResize() {
-      document.querySelectorAll("textarea").forEach(t => {
-        t.removeEventListener("input", () => autoResize(t));
-        t.addEventListener("input", () => autoResize(t));
+    function enableAutoResize(scope=document){
+      scope.querySelectorAll("textarea").forEach(t=>{
+        t.addEventListener("input", ()=>autoResize(t));
+        autoResize(t);
       });
     }
 
-    generateRows();
+    // Merge (creates editable time range + combines texts)
+    document.getElementById("mergeRows").addEventListener("click", ()=>{
+      const selected = [...document.querySelectorAll(".rowSelect:checked")].map(cb=>cb.closest("tr"));
+      if(selected.length < 2){ alert("Select at least 2 rows to merge!"); return; }
 
-    document.getElementById("addRow").addEventListener("click", () => addRow());
+      const startTime = selected[0].querySelector(".timeInput").value || "??:??";
+      const endTime = selected[selected.length-1].querySelector(".timeInput").value || "??:??";
+      const range = `${startTime} - ${endTime}`;
 
-    document.getElementById("mergeRows").addEventListener("click", function () {
-      const selected = Array.from(document.querySelectorAll(".rowSelect:checked")).map(cb => cb.closest("tr"));
-      if (selected.length < 2) return alert("Select at least 2 rows to merge!");
-
-      const startTime = selected[0].querySelector(".timeInput").value;
-      const endTime = selected[selected.length - 1].querySelector(".timeInput").value;
-      const mergedTime = `${startTime} - ${endTime}`;
-
-      let mergedTask = "", mergedNote = "", mergedFeedback = "";
-      selected.forEach((row, i) => {
-        const [task, note, feedback] = row.querySelectorAll("textarea");
-        mergedTask += (task?.value || "") + (i < selected.length - 1 ? " | " : "");
-        mergedNote += (note?.value || "") + (i < selected.length - 1 ? " | " : "");
-        mergedFeedback += (feedback?.value || "") + (i < selected.length - 1 ? " | " : "");
+      let mergedTask="", mergedNote="", mergedFeedback="";
+      selected.forEach((row,i)=>{
+        const [task, note, feed] = row.querySelectorAll("textarea");
+        mergedTask += (task?.value || "") + (i < selected.length-1 ? " | " : "");
+        mergedNote += (note?.value || "") + (i < selected.length-1 ? " | " : "");
+        mergedFeedback += (feed?.value || "") + (i < selected.length-1 ? " | " : "");
       });
 
-      const firstRow = selected[0];
-      firstRow.querySelector(".timeInput").value = mergedTime;
-      const [task, note, feedback] = firstRow.querySelectorAll("textarea");
-      task.value = mergedTask;
-      note.value = mergedNote;
-      feedback.value = mergedFeedback;
-      [task, note, feedback].forEach(autoResize);
-      firstRow.dataset.mergedRange = `${startTime},${endTime}`;
+      const top = selected[0];
+      top.querySelector(".timeInput").value = range;
+      const [t1,n1,f1] = top.querySelectorAll("textarea");
+      t1.value = mergedTask; n1.value = mergedNote; f1.value = mergedFeedback;
+      [t1,n1,f1].forEach(autoResize);
+      top.dataset.mergedRange = `${startTime},${endTime}`;
 
-      selected.slice(1).forEach(row => row.remove());
-      alert("Rows merged successfully ✅");
+      // remove the rest
+      selected.slice(1).forEach(r=>r.remove());
     });
 
-    document.getElementById("unmergeRows").addEventListener("click", function () {
-      const rows = document.querySelectorAll("#plannerTable tbody tr");
+    // Unmerge (restores rows for the saved range)
+    document.getElementById("unmergeRows").addEventListener("click", ()=>{
+      const rows = [...document.querySelectorAll("#plannerTable tbody tr")];
       let found = false;
 
-      rows.forEach(row => {
-        if (row.querySelector(".rowSelect").checked && row.dataset.mergedRange) {
+      rows.forEach(row=>{
+        const cb = row.querySelector(".rowSelect");
+        if(cb.checked && row.dataset.mergedRange){
           found = true;
-          const [startTime, endTime] = row.dataset.mergedRange.split(",");
-          const startHour = parseInt(startTime.split(":")[0]);
-          const endHour = parseInt(endTime.split(":")[0]);
+          const [startTime,endTime] = row.dataset.mergedRange.split(",");
+          const startH = parseInt(startTime.split(":")[0]);
+          const endH = parseInt(endTime.split(":")[0]);
 
           const [taskVal, noteVal, feedVal] = row.querySelectorAll("textarea");
           row.remove();
 
-          for (let i = startHour; i <= endHour; i++) {
-            const hour = i.toString().padStart(2, '0') + ":00";
+          for(let h=startH; h<=endH; h++){
+            const hour = String(h).padStart(2,"0")+":00";
             addRow(hour);
             const newRow = tbody.lastElementChild;
-            const [task, note, feedback] = newRow.querySelectorAll("textarea");
-            task.value = taskVal.value;
-            note.value = noteVal.value;
-            feedback.value = feedVal.value;
-            [task, note, feedback].forEach(autoResize);
+            const [t,n,f] = newRow.querySelectorAll("textarea");
+            t.value = taskVal.value; n.value = noteVal.value; f.value = feedVal.value;
+            [t,n,f].forEach(autoResize);
           }
         }
       });
 
-      if (found) {
-        alert("Row unmerged successfully ✅");
-      } else {
-        alert("Select a merged row to unmerge!");
-      }
+      if(!found) alert("Select a merged row to unmerge!");
     });
 
-    document.getElementById("savePdf").addEventListener("click", function () {
-      const planner = document.getElementById("planner");
+    document.getElementById("addRow").addEventListener("click", ()=>addRow(""));
+    document.getElementById("resetTable").addEventListener("click", generateRows);
+
+    // PDF (A4 Portrait)
+    document.getElementById("savePdf").addEventListener("click", ()=>{
+      const el = document.getElementById("planner");
       const opt = {
-        margin: 0.5,
-        filename: `AKT_Planner_${studentName}.pdf`,
+        margin: 0.3,
+        filename: "AKT_Planner.pdf",
         image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "in", format: "a4", orientation: "landscape" }
+        html2canvas: { scale: 2, useCORS:true },
+        jsPDF: { unit: "in", format: "a4", orientation: "portrait" }
       };
-      html2pdf().set(opt).from(planner).save();
+      html2pdf().set(opt).from(el).save();
     });
+
+    // Init
+    generateRows();
   </script>
 </body>
 </html>
